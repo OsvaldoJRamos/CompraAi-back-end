@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CompraAi.Dominio\CompraAi.Dominio.csproj" />
+    <ProjectReference Include="..\CompraAi.Repositorios\CompraAi.Repositorios.csproj" />
+  </ItemGroup>
+
+</Project>

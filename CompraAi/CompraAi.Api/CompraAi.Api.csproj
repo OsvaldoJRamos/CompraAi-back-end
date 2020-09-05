@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Aplicacao\Exemplos\Mapeamentos\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NSwag.Annotations" Version="13.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CompraAi.Repositorios\CompraAi.Repositorios.csproj" />
+    <ProjectReference Include="..\CompraAi.Servicos\CompraAi.Servicos.csproj" />
+  </ItemGroup>
+
+
+</Project>
