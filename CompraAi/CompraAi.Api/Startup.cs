@@ -3,6 +3,8 @@ using CompraAi.Repositorios.Exemplos;
 using CompraAi.Repositorios.Exemplos.Interfaces;
 using CompraAi.Repositorios.Interfaces;
 using CompraAi.Repositorios.Repositorios;
+using CompraAi.Servicos.Aplicacao;
+using CompraAi.Servicos.Aplicacao.Interfaces;
 using CompraAi.Servicos.Exemplo;
 using CompraAi.Servicos.Exemplo.Interfaces;
 using Microsoft.AspNetCore.Builder;
@@ -12,6 +14,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using AutoMapper;
+using CompraAi.Api.Aplicacao.Mapeamentos;
 
 namespace CompraAi.Api
 {
@@ -40,6 +44,10 @@ namespace CompraAi.Api
             services.AddScoped<ITempoRepositorio, TempoRepositorio>();
             services.AddScoped<ITempoServico, TempoServico>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<IUsuarioServico, UsuarioServico>();
+
+            //services.AddAutoMapper(typeof(AutoMapperProfile));
+
             services.AddControllers();
 
         }

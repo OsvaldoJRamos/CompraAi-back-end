@@ -4,11 +4,6 @@ namespace CompraAi.Dominio
 {
     public class Usuario
     {
-        public Usuario()
-        {
-
-        }
-
         public Usuario(string nome, string email)
         {
 

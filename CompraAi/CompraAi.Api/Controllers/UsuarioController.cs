@@ -1,8 +1,9 @@
-﻿using CompraAi.Dominio;
-using CompraAi.Repositorios.Interfaces;
+﻿using AutoMapper;
+using CompraAi.Api.Aplicacao.ViewModel;
+using CompraAi.Dominio;
+using CompraAi.Servicos.Aplicacao.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.WebEncoders.Testing;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace CompraAi.Api.Controllers
@@ -11,28 +12,27 @@ namespace CompraAi.Api.Controllers
     [ApiController]
     public class UsuarioController : ControllerBase
     {
-        private readonly IConfiguration _config;
-        private readonly IUsuarioRepository _usuarioRepositorio;
+        private readonly IUsuarioServico _usuarioServico;
         //private readonly IMapper _mapper;
 
         public UsuarioController(
-            IConfiguration config,
-            IUsuarioRepository usuarioRepositorio
-            /*IMapper mapper*/)
+            IUsuarioServico usuarioServico/*,
+            IMapper mapper*/)
         {
-            _config = config;
             //_mapper = mapper;
-            _usuarioRepositorio = usuarioRepositorio;
+            _usuarioServico = usuarioServico;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Registrar()
+        [ProducesResponseType((int)HttpStatusCode.Created, Type = typeof(UsuarioViewModel))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> Registrar([FromBody] UsuarioViewModel viewModel)
         {
-            var usuario = new Usuario("testeNome", "testeEmail");
-            _usuarioRepositorio.Add(usuario);
-            await _usuarioRepositorio.SaveChangesAsync();
+            //var usuario = _mapper.Map<=Usuario>(viewModel);
+            var usuario = new Usuario(viewModel.Nome, viewModel.Email);
+            var result = await _usuarioServico.Registrar(usuario);
 
-            return Ok(usuario);
+            return new ObjectResult(viewModel);
         }
     }
 }
