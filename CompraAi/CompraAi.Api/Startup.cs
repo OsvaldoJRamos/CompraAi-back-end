@@ -14,8 +14,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using AutoMapper;
-using CompraAi.Api.Aplicacao.Mapeamentos;
 
 namespace CompraAi.Api
 {
@@ -43,10 +41,15 @@ namespace CompraAi.Api
 
             services.AddScoped<ITempoRepositorio, TempoRepositorio>();
             services.AddScoped<ITempoServico, TempoServico>();
+
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<IUsuarioServico, UsuarioServico>();
 
-            //services.AddAutoMapper(typeof(AutoMapperProfile));
+            services.AddScoped<IFamiliaServico, FamiliaServico>();
+            services.AddScoped<IFamiliaRepository, FamiliaRepository>();
+
+            services.AddScoped<IConviteServico, ConviteServico>();
+            services.AddScoped<IConviteRepository, ConviteRepository>();
 
             services.AddControllers();
 

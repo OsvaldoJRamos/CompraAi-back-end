@@ -8,5 +8,7 @@ namespace CompraAi.Repositorios
         public Contexto(DbContextOptions<Contexto> options) : base(options) { }
 
         public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<Familia> Familia { get; set; }
+        public DbSet<Convite> Convite { get; set; }
     }
 }
