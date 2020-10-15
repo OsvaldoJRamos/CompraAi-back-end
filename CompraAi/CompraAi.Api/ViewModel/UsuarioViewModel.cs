@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CompraAi.Api.Aplicacao.ViewModel
+namespace CompraAi.Api.ViewModel
 {
     public class UsuarioViewModel
     {

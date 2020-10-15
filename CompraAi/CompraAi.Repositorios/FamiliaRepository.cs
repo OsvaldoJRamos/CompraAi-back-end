@@ -1,12 +1,12 @@
 ﻿using CompraAi.Repositorios.Interfaces;
 using System.Threading.Tasks;
 
-namespace CompraAi.Repositorios.Repositorios
+namespace CompraAi.Repositorios
 {
-    public class ConviteRepository : IConviteRepository
+    public class FamiliaRepository : IFamiliaRepository
     {
         private readonly Contexto _contexto;
-        public ConviteRepository(Contexto contexto)
+        public FamiliaRepository(Contexto contexto)
         {
             _contexto = contexto;
         }

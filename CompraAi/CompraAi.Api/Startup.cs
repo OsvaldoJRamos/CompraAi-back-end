@@ -1,12 +1,7 @@
 using CompraAi.Repositorios;
-using CompraAi.Repositorios.Exemplos;
-using CompraAi.Repositorios.Exemplos.Interfaces;
 using CompraAi.Repositorios.Interfaces;
-using CompraAi.Repositorios.Repositorios;
-using CompraAi.Servicos.Aplicacao;
-using CompraAi.Servicos.Aplicacao.Interfaces;
-using CompraAi.Servicos.Exemplo;
-using CompraAi.Servicos.Exemplo.Interfaces;
+using CompraAi.Servicos;
+using CompraAi.Servicos.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -39,9 +34,6 @@ namespace CompraAi.Api
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddScoped<ITempoRepositorio, TempoRepositorio>();
-            services.AddScoped<ITempoServico, TempoServico>();
-
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<IUsuarioServico, UsuarioServico>();
 
@@ -50,6 +42,9 @@ namespace CompraAi.Api
 
             services.AddScoped<IConviteServico, ConviteServico>();
             services.AddScoped<IConviteRepository, ConviteRepository>();
+
+            services.AddScoped<IItemServico, ItemServico>();
+            services.AddScoped<IItemRepositorio, ItemRepositorio>();
 
             services.AddControllers();
 

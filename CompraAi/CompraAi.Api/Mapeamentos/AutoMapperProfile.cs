@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using CompraAi.Api.Aplicacao.ViewModel;
+using CompraAi.Api.ViewModel;
 using CompraAi.Dominio;
 
-namespace CompraAi.Api.Aplicacao.Mapeamentos
+namespace CompraAi.Api.Mapeamentos
 {
     public class AutoMapperProfile : Profile
     {

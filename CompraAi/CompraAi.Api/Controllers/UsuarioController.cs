@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using CompraAi.Api.Aplicacao.ViewModel;
+using CompraAi.Api.ViewModel;
 using CompraAi.Dominio;
-using CompraAi.Servicos.Aplicacao.Interfaces;
+using CompraAi.Servicos.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Threading.Tasks;

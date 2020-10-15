@@ -1,4 +1,4 @@
-﻿namespace CompraAi.Api.Aplicacao.ViewModel
+﻿namespace CompraAi.Api.ViewModel
 {
     public class FamiliaViewModel
     {

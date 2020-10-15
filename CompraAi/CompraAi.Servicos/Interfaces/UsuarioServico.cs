@@ -1,7 +1,7 @@
 ﻿using CompraAi.Dominio;
 using System.Threading.Tasks;
 
-namespace CompraAi.Servicos.Aplicacao.Interfaces
+namespace CompraAi.Servicos.Interfaces
 {
     public interface IUsuarioServico
     {

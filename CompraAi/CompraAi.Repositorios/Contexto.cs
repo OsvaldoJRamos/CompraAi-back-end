@@ -10,5 +10,6 @@ namespace CompraAi.Repositorios
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Familia> Familia { get; set; }
         public DbSet<Convite> Convite { get; set; }
+        public DbSet<Item> Item { get; set; }
     }
 }
