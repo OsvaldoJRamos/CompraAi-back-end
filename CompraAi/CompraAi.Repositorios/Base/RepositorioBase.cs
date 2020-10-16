@@ -31,15 +31,15 @@ namespace CompraAi.Repositorios.Base
 
         public void ExcluirPeloId(TId id)
         {
-            var entity = RetornarPeloId(id);
-            Excluir(entity);
+            //var entity = RetornarPeloId(id);
+            //Excluir(entity);
         }
 
         public void ExcluirVarios(TEntity[] entityArray) =>
             _dataset.RemoveRange(entityArray);
 
-        public TEntity RetornarPeloId(TId id) =>
-            _dataset.Find(id);
+        public async Task<TEntity> RetornarPeloId(TId id) =>
+            await _dataset.FindAsync(id);
 
         public async Task<bool> SalvarAlteracoesAsync() =>
             await _contexto.SaveChangesAsync() > 0;

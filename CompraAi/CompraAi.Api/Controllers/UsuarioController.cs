@@ -1,12 +1,11 @@
-﻿using AutoMapper;
-using CompraAi.Api.ViewModel;
+﻿using CompraAi.Api.ViewModel;
 using CompraAi.Dominio;
 using CompraAi.Dominio.Validacoes;
 using CompraAi.Servicos.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Net;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace CompraAi.Api.Controllers
@@ -16,14 +15,14 @@ namespace CompraAi.Api.Controllers
     public class UsuarioController : ControllerBase
     {
         private readonly IUsuarioServico _usuarioServico;
-        //private readonly IMapper _mapper;
+        private readonly IConviteServico _conviteServico;
 
         public UsuarioController(
-            IUsuarioServico usuarioServico/*,
-            IMapper mapper*/)
+            IUsuarioServico usuarioServico,
+            IConviteServico conviteServico)
         {
-            //_mapper = mapper;
             _usuarioServico = usuarioServico;
+            _conviteServico = conviteServico;
         }
 
         [HttpPost]
@@ -36,6 +35,26 @@ namespace CompraAi.Api.Controllers
                 var usuario = new Usuario(viewModel.Nome, viewModel.Email);
                 await _usuarioServico.Criar(usuario);
                 return new ObjectResult(usuario.UsuarioId);
+            }
+            catch (ValidacaoEntidadeException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("AceitarConvite")]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Guid))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> AceitarConvite([FromBody] AceitarConviteViewModel viewModel)
+        {
+            try
+            {
+                //var convite = await _conviteServico.RetornarPeloId(viewModel.ConviteId);
+                //var usuario = await _usuarioServico.RetornarPeloId(viewModel.UsuarioId);
+
+                //var usuario = new Usuario(viewModel.Nome, viewModel.Email);
+                //await _usuarioServico.Criar(usuario);
+                return new ObjectResult(""/*usuario.UsuarioId*/);
             }
             catch (ValidacaoEntidadeException ex)
             {

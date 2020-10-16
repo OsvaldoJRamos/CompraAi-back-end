@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CompraAi.Dominio
 {
-    public class Convite
+    public class Convite : EntidadeBase
     {
         public Convite(Guid usuarioId, Guid familiaId)
         {
@@ -24,7 +24,7 @@ namespace CompraAi.Dominio
         public DateTime ExpiraEm { get; set; }
         public bool Usado { get; set; } = false;
 
-        public void Validar()
+        public override void Validar()
         {
             if (FamiliaId == null)
                 throw new ValidacaoEntidadeException("O ID da família não pode ser nulo.", nameof(FamiliaId));

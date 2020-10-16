@@ -1,10 +1,11 @@
 ﻿using CompraAi.Dominio;
-using System.Threading.Tasks;
+using CompraAi.Repositorios.Interfaces;
+using CompraAi.Servicos.Base.Interfaces;
+using System;
 
 namespace CompraAi.Servicos.Interfaces
 {
-    public interface IConviteServico
+    public interface IConviteServico : IServicoBase<Convite, Guid, IConviteRepositorio>
     {
-        Task<Convite> Criar(Convite convite);
     }
 }

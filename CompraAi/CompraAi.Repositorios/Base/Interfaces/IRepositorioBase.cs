@@ -8,7 +8,7 @@ namespace CompraAi.Repositorios.Base.Interfaces
         TEntity Atualizar(TEntity entity);
         void Excluir(TEntity entity);
         void ExcluirVarios(TEntity[] entityArray);
-        TEntity RetornarPeloId(TId id);
+        Task<TEntity> RetornarPeloId(TId id);
         void ExcluirPeloId(TId id);
         Task<bool> SalvarAlteracoesAsync();
     }
