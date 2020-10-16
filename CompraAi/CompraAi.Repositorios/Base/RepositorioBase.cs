@@ -29,7 +29,7 @@ namespace CompraAi.Repositorios.Base
         public void Excluir(TEntity entity) =>
             _dataset.Remove(entity);
 
-        public void ExcluirPeloId(TId id)
+        public async void ExcluirPeloId(TId id)
         {
             var entity = await RetornarPeloId(id);
             Excluir(entity);
