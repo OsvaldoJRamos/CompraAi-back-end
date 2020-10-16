@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CompraAi.Dominio.Validacoes;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace CompraAi.Dominio
 {
@@ -10,6 +12,7 @@ namespace CompraAi.Dominio
             Codigo = codigo;
         }
 
+        [Key]
         public Guid FamiliaId { get; set; } = Guid.NewGuid();
         public string Nome { get; set; }
         public string Codigo { get; set; }
@@ -17,15 +20,21 @@ namespace CompraAi.Dominio
         public DateTime? AlteradoEm { get; set; }
         public DateTime? ExcluidoEm { get; set; }
 
-        public bool ValidarFamilia()
+        public void Validar()
         {
-            var valido = true;
+            if (Codigo.Length > 10)
+            {
+                throw new ValidacaoEntidadeException(
+                    "O código da família não pode ter tamanho menor do que 10 caracteres.",
+                    nameof(Codigo));
+            }
 
-            if (Codigo.Length > 10 ||
-                Nome.Length > 30)
-                valido = false;
-
-            return valido;
+            if (Nome.Length > 30)
+            {
+                throw new ValidacaoEntidadeException(
+                    "O nome da família não pode ter tamanho menor do que 30 caracteres.",
+                    nameof(Nome));
+            }
         }
     }
 }

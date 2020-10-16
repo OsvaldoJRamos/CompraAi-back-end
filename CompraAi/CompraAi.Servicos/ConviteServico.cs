@@ -8,18 +8,18 @@ namespace CompraAi.Servicos
 {
     public class ConviteServico : IConviteServico
     {
-        private readonly IConviteRepository _conviteRepository;
-        public ConviteServico(IConviteRepository conviteRepository)
+        private readonly IConviteRepositorio _conviteRepository;
+        public ConviteServico(IConviteRepositorio conviteRepository)
         {
             _conviteRepository = conviteRepository
-                ?? throw new ArgumentNullException(nameof(IUsuarioRepository), "O parâmetro não pode ser nulo.");
+                ?? throw new ArgumentNullException(nameof(IUsuarioRepositorio), "O parâmetro não pode ser nulo.");
         }
 
-        public async Task<Convite> CriarConvite(Convite convite)
+        public async Task<Convite> Criar(Convite convite)
         {
-            _conviteRepository.Add(convite);
-            await _conviteRepository.SaveChangesAsync();
-
+            convite.Validar();
+            _conviteRepository.Criar(convite);
+            await _conviteRepository.SalvarAlteracoesAsync();
             return convite;
         }
     }

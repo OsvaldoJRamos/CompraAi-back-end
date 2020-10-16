@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CompraAi.Dominio.Validacoes;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace CompraAi.Dominio
 {
@@ -11,6 +13,7 @@ namespace CompraAi.Dominio
             Descricao = descricao;
         }
 
+        [Key]
         public Guid ItemId { get; set; } = Guid.NewGuid();
         public Guid FamiliaId { get; set; }
         public Guid UsuarioId { get; set; }
@@ -24,16 +27,16 @@ namespace CompraAi.Dominio
         public void Validar()
         {
             if (FamiliaId == null)
-                throw new ArgumentNullException(nameof(FamiliaId),$"{nameof(FamiliaId)} não pode ser nulo.");
+                throw new ValidacaoEntidadeException("O ID da família não pode ser nulo.", nameof(FamiliaId));
 
             if (UsuarioId == null)
-                throw new ArgumentNullException(nameof(FamiliaId), $"{nameof(UsuarioId)} não pode ser nulo.");
+                throw new ValidacaoEntidadeException("O ID do usuário não pode ser nulo.", nameof(UsuarioId));
 
             if (StatusId == null)
-                throw new ArgumentNullException(nameof(FamiliaId), $"{nameof(StatusId)} não pode ser nulo.");
+                throw new ValidacaoEntidadeException("O ID do status não pode ser nulo.", nameof(StatusId));
 
             if (string.IsNullOrEmpty(Descricao))
-                throw new ArgumentNullException(nameof(Descricao), $"{Descricao} não pode ser vazio ou nulo.");
+                throw new ValidacaoEntidadeException("A descrição não pode ser vazia ou nula.", nameof(Descricao));
         }
     }
 }

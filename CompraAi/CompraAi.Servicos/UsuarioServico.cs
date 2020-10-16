@@ -8,18 +8,18 @@ namespace CompraAi.Servicos
 {
     public class UsuarioServico : IUsuarioServico
     {
-        private readonly IUsuarioRepository _usuarioRepository;
-        public UsuarioServico(IUsuarioRepository usuarioRepository)
+        private readonly IUsuarioRepositorio _usuarioRepository;
+        public UsuarioServico(IUsuarioRepositorio usuarioRepository)
         {
             _usuarioRepository = usuarioRepository
-                ?? throw new ArgumentNullException(nameof(IUsuarioRepository), "O parâmetro não pode ser nulo.");
+                ?? throw new ArgumentNullException(nameof(IUsuarioRepositorio), "O parâmetro não pode ser nulo.");
         }
 
-        public async Task<Usuario> Registrar(Usuario usuario)
+        public async Task<Usuario> Criar(Usuario usuario)
         {
-            _usuarioRepository.Add(usuario);
-            await _usuarioRepository.SaveChangesAsync();
-
+            usuario.Validar();
+            _usuarioRepository.Criar(usuario);
+            await _usuarioRepository.SalvarAlteracoesAsync();
             return usuario;
         }
     }

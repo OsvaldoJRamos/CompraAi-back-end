@@ -18,6 +18,7 @@ namespace CompraAi.Servicos
 
         public async Task<Item> Atualizar(Item item)
         {
+            item.Validar();
             _itemRepositorio.Atualizar(item);
             await _itemRepositorio.SalvarAlteracoesAsync();
             return item;
@@ -25,6 +26,7 @@ namespace CompraAi.Servicos
 
         public async Task<Item> Criar(Item item)
         {
+            item.Validar();
             _itemRepositorio.Criar(item);
             await _itemRepositorio.SalvarAlteracoesAsync();
             return item;
@@ -48,14 +50,14 @@ namespace CompraAi.Servicos
             await _itemRepositorio.SalvarAlteracoesAsync();
         }
 
-        public Item RetornarPeloId(Guid itemId)
+        public async Task<Item> RetornarPeloId(Guid itemId)
         {
-            return _itemRepositorio.RetornarPeloId(itemId);
+            return await Task.Run(() => _itemRepositorio.RetornarPeloId(itemId));
         }
 
-        public List<Item> RetornarPorFamiliaId(Guid familiaId)
+        public async Task<List<Item>> RetornarPorFamiliaId(Guid familiaId)
         {
-            return _itemRepositorio.RetornarPorFamiliaId(familiaId);
+            return await Task.Run(() => _itemRepositorio.RetornarPorFamiliaId(familiaId));
         }
     }
 }

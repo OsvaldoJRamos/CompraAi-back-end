@@ -1,6 +1,8 @@
 ﻿using CompraAi.Api.ViewModel;
 using CompraAi.Dominio;
+using CompraAi.Dominio.Validacoes;
 using CompraAi.Servicos.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net;
@@ -19,20 +21,46 @@ namespace CompraAi.Api.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType((int)HttpStatusCode.Created, Type = typeof(string))]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Registrar([FromBody] CriarItemViewModel viewModel)
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Guid))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Criar([FromBody] CriarItemViewModel viewModel)
         {
             try
             {
                 var item = new Item(viewModel.FamiliaId, viewModel.UsuarioId, viewModel.Descricao);
-                var itemResultado = await _itemServico.Criar(item);
-                return new ObjectResult(itemResultado.ItemId);
+                await _itemServico.Criar(item);
+                return new ObjectResult(item.ItemId);
+            }
+            catch (ValidacaoEntidadeException ex)
+            {
+                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                return new BadRequestObjectResult($"Erro ao cadastrar item: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+        [HttpGet("{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Item))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> RetornarPeloId(Guid id)
+        {
+            try
+            {
+                Item item = await _itemServico.RetornarPeloId(id);
+
+                if (item == null)
+                    return NotFound($"Item não encontrado pelo ID '{id}'");
+                
+                return new ObjectResult(item);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
     }
 }

@@ -12,8 +12,8 @@ namespace CompraAi.Servicos.Interfaces
         Task<Item> Atualizar(Item item);
         Task Excluir(Item item);
         Task ExcluirVarios(Item[] itens);
-        Item RetornarPeloId(Guid itemId);
+        Task<Item> RetornarPeloId(Guid itemId);
         Task ExcluirPeloId(Guid itemId);
-        List<Item> RetornarPorFamiliaId(Guid familiaId);
+        Task<List<Item>> RetornarPorFamiliaId(Guid familiaId);
     }
 }

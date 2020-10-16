@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using CompraAi.Api.ViewModel;
 using CompraAi.Dominio;
+using CompraAi.Dominio.Validacoes;
 using CompraAi.Servicos.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -24,15 +27,20 @@ namespace CompraAi.Api.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType((int)HttpStatusCode.Created, Type = typeof(UsuarioViewModel))]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Registrar([FromBody] UsuarioViewModel viewModel)
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Guid))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Criar([FromBody] CriarUsuarioViewModel viewModel)
         {
-            //var usuario = _mapper.Map<=Usuario>(viewModel);
-            var usuario = new Usuario(viewModel.Nome, viewModel.Email);
-            var result = await _usuarioServico.Registrar(usuario);
-
-            return new ObjectResult(viewModel);
+            try
+            {
+                var usuario = new Usuario(viewModel.Nome, viewModel.Email);
+                await _usuarioServico.Criar(usuario);
+                return new ObjectResult(usuario.UsuarioId);
+            }
+            catch (ValidacaoEntidadeException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

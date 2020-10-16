@@ -5,6 +5,6 @@ namespace CompraAi.Servicos.Interfaces
 {
     public interface IConviteServico
     {
-        Task<Convite> CriarConvite(Convite usuario);
+        Task<Convite> Criar(Convite convite);
     }
 }

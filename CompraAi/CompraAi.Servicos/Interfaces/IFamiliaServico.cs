@@ -5,6 +5,6 @@ namespace CompraAi.Servicos.Interfaces
 {
     public interface IFamiliaServico
     {
-        Task<Familia> Registrar(Familia usuario);
+        Task<Familia> Criar(Familia familia);
     }
 }

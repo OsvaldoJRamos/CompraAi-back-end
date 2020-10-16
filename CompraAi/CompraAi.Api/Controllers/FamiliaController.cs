@@ -1,7 +1,10 @@
 ﻿using CompraAi.Api.ViewModel;
 using CompraAi.Dominio;
+using CompraAi.Dominio.Validacoes;
 using CompraAi.Servicos.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -18,17 +21,20 @@ namespace CompraAi.Api.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType((int)HttpStatusCode.Created, Type = typeof(FamiliaViewModel))]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Registrar([FromBody] FamiliaViewModel viewModel)
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Guid))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Criar([FromBody] CriarFamiliaViewModel viewModel)
         {
-            var familia = new Familia(viewModel.Nome, viewModel.Codigo);
-            var result = await _familiaServico.Registrar(familia);
-
-            if (result == null)
-                return new BadRequestObjectResult("Houve um erro ao registar a familia.");
-
-            return new ObjectResult(viewModel);
+            try
+            {
+                var familia = new Familia(viewModel.Nome, viewModel.Codigo);
+                await _familiaServico.Criar(familia);
+                return new ObjectResult(familia.FamiliaId);
+            }
+            catch (ValidacaoEntidadeException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

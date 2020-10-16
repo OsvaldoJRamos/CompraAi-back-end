@@ -8,7 +8,7 @@ namespace CompraAi.Api.Mapeamentos
     {
         public AutoMapperProfile()
         {
-            CreateMap<Usuario, UsuarioViewModel>().ReverseMap();
+            CreateMap<Usuario, CriarUsuarioViewModel>().ReverseMap();
         }
     }
 }

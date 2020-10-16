@@ -5,6 +5,6 @@ namespace CompraAi.Servicos.Interfaces
 {
     public interface IUsuarioServico
     {
-        Task<Usuario> Registrar(Usuario usuario);
+        Task<Usuario> Criar(Usuario usuario);
     }
 }

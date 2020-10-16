@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CompraAi.Api.ViewModel
 {
-    public class UsuarioViewModel
+    public class CriarUsuarioViewModel
     {
         public string Nome { get; set; }
         public string Email { get; set; }

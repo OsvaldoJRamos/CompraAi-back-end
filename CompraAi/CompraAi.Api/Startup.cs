@@ -34,14 +34,14 @@ namespace CompraAi.Api
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
             services.AddScoped<IUsuarioServico, UsuarioServico>();
 
             services.AddScoped<IFamiliaServico, FamiliaServico>();
-            services.AddScoped<IFamiliaRepository, FamiliaRepository>();
+            services.AddScoped<IFamiliaRepositorio, FamiliaRepositorio>();
 
             services.AddScoped<IConviteServico, ConviteServico>();
-            services.AddScoped<IConviteRepository, ConviteRepository>();
+            services.AddScoped<IConviteRepositorio, ConviteRepositorio>();
 
             services.AddScoped<IItemServico, ItemServico>();
             services.AddScoped<IItemRepositorio, ItemRepositorio>();

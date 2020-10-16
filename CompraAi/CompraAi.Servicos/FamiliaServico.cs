@@ -8,22 +8,18 @@ namespace CompraAi.Servicos
 {
     public class FamiliaServico : IFamiliaServico
     {
-        private readonly IFamiliaRepository _familiaRepository;
-        public FamiliaServico(IFamiliaRepository familiaRepository)
+        private readonly IFamiliaRepositorio _familiaRepository;
+        public FamiliaServico(IFamiliaRepositorio familiaRepository)
         {
             _familiaRepository = familiaRepository
-                ?? throw new ArgumentNullException(nameof(IFamiliaRepository), "O parâmetro não pode ser nulo.");
+                ?? throw new ArgumentNullException(nameof(IFamiliaRepositorio), "O parâmetro não pode ser nulo.");
         }
 
-        public async Task<Familia> Registrar(Familia familia)
+        public async Task<Familia> Criar(Familia familia)
         {
-            var valido = familia.ValidarFamilia();
-            if (!valido)
-                return null;
-
-            _familiaRepository.Add(familia);
-            await _familiaRepository.SaveChangesAsync();
-
+            familia.Validar();
+            _familiaRepository.Criar(familia);
+            await _familiaRepository.SalvarAlteracoesAsync();
             return familia;
         }
     }

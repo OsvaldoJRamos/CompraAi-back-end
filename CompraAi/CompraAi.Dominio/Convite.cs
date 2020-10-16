@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CompraAi.Dominio.Validacoes;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace CompraAi.Dominio
 {
@@ -12,6 +14,7 @@ namespace CompraAi.Dominio
             ExpiraEm = CriadoEm.AddDays(4);
         }
 
+        [Key]
         public Guid ConviteId { get; set; } = Guid.NewGuid();
         public Guid UsuarioId { get; set; } = Guid.NewGuid();
         public Guid FamiliaId { get; set; } = Guid.NewGuid();
@@ -20,5 +23,14 @@ namespace CompraAi.Dominio
         public DateTime? ExcluidoEm { get; set; }
         public DateTime ExpiraEm { get; set; }
         public bool Usado { get; set; } = false;
+
+        public void Validar()
+        {
+            if (FamiliaId == null)
+                throw new ValidacaoEntidadeException("O ID da família não pode ser nulo.", nameof(FamiliaId));
+
+            if (UsuarioId == null)
+                throw new ValidacaoEntidadeException("O ID do usuário não pode ser nulo.", nameof(UsuarioId));
+        }
     }
 }
