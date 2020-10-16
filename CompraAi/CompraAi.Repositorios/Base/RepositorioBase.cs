@@ -31,8 +31,8 @@ namespace CompraAi.Repositorios.Base
 
         public void ExcluirPeloId(TId id)
         {
-            //var entity = RetornarPeloId(id);
-            //Excluir(entity);
+            var entity = await RetornarPeloId(id);
+            Excluir(entity);
         }
 
         public void ExcluirVarios(TEntity[] entityArray) =>
