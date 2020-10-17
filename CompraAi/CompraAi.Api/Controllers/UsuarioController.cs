@@ -49,6 +49,8 @@ namespace CompraAi.Api.Controllers
         {
             try
             {
+                //TODO
+                //Falta terminar 
                 var convite = await _conviteServico.RetornarPeloId(viewModel.ConviteId);
                 var usuario = await _usuarioServico.RetornarPeloId(viewModel.UsuarioId);
 
