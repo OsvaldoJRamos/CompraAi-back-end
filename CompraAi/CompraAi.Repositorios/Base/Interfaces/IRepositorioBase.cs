@@ -4,12 +4,12 @@ namespace CompraAi.Repositorios.Base.Interfaces
 {
     public interface IRepositorioBase<TEntity, TId> where TEntity : class
     {
-        TEntity Criar(TEntity entity);
-        TEntity Atualizar(TEntity entity);
-        void Excluir(TEntity entity);
-        void ExcluirVarios(TEntity[] entityArray);
+        Task<TEntity> Criar(TEntity entity);
+        Task<TEntity> Atualizar(TEntity entity);
+        Task Excluir(TEntity entity);
+        Task ExcluirVarios(TEntity[] entityArray);
         Task<TEntity> RetornarPeloId(TId id);
-        void ExcluirPeloId(TId id);
+        Task ExcluirPeloId(TId id);
         Task<bool> SalvarAlteracoesAsync();
     }
 }

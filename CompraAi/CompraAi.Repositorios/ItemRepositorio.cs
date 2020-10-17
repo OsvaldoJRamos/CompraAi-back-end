@@ -19,9 +19,9 @@ namespace CompraAi.Repositorios
             _contexto = contexto;
         }
 
-        public List<Item> RetornarPorFamiliaId(Guid familiaId) =>
-            (from i in _contexto.Item
+        public async Task<List<Item>> RetornarPorFamiliaId(Guid familiaId) =>
+            await (from i in _contexto.Item
              where i.FamiliaId == familiaId
-             select i).ToList();
+             select i).ToListAsync();
     }
 }

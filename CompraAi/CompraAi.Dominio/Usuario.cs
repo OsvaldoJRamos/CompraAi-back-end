@@ -1,4 +1,5 @@
-﻿using CompraAi.Dominio.Validacoes;
+﻿using CompraAi.Dominio.Base;
+using CompraAi.Dominio.Validacoes;
 using System;
 using System.ComponentModel.DataAnnotations;
 

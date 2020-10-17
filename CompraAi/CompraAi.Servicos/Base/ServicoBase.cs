@@ -1,4 +1,4 @@
-﻿using CompraAi.Dominio;
+﻿using CompraAi.Dominio.Base;
 using CompraAi.Repositorios.Base.Interfaces;
 using CompraAi.Servicos.Base.Interfaces;
 using System;
@@ -20,36 +20,34 @@ namespace CompraAi.Servicos.Base
 
         public async Task<TEntity> Atualizar(TEntity entity)
         {
-            var item =  _repositorio.Atualizar(entity);
+            var item = await _repositorio.Atualizar(entity);
             await _repositorio.SalvarAlteracoesAsync();
-
             return item;
         }
 
         public async Task<TEntity> Criar(TEntity entity)
         {
             entity.Validar();
-            var item = _repositorio.Criar(entity);
+            var item = await _repositorio.Criar(entity);
             await _repositorio.SalvarAlteracoesAsync();
-
             return item;
         }
 
         public async Task Excluir(TEntity entity)
         {
-            _repositorio.Excluir(entity);
+            await _repositorio.Excluir(entity);
             await _repositorio.SalvarAlteracoesAsync();
         }
 
         public async Task ExcluirPeloId(TId id)
         {
-            _repositorio.ExcluirPeloId(id);
+            await _repositorio.ExcluirPeloId(id);
             await _repositorio.SalvarAlteracoesAsync();
         }
 
         public async Task ExcluirVarios(TEntity[] entityArray)
         {
-            _repositorio.ExcluirVarios(entityArray);
+            await _repositorio.ExcluirVarios(entityArray);
             await _repositorio.SalvarAlteracoesAsync();
         }
 

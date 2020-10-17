@@ -20,23 +20,23 @@ namespace CompraAi.Repositorios.Base
             _dataset = _contexto.Set<TEntity>();
         }
 
-        public TEntity Atualizar(TEntity entity) =>
-            _dataset.Update(entity).Entity;
+        public async Task<TEntity> Atualizar(TEntity entity) =>
+            await Task.Run(() => _dataset.Update(entity).Entity);
 
-        public TEntity Criar(TEntity entity) =>
-            _dataset.Add(entity).Entity;
+        public async Task<TEntity> Criar(TEntity entity) =>
+            await Task.Run(() => _dataset.Add(entity).Entity);
 
-        public void Excluir(TEntity entity) =>
-            _dataset.Remove(entity);
+        public async Task Excluir(TEntity entity) =>
+            await Task.Run(() => _dataset.Remove(entity));
 
-        public async void ExcluirPeloId(TId id)
+        public async Task ExcluirPeloId(TId id)
         {
             var entity = await RetornarPeloId(id);
-            Excluir(entity);
+            await Excluir(entity);
         }
 
-        public void ExcluirVarios(TEntity[] entityArray) =>
-            _dataset.RemoveRange(entityArray);
+        public async Task ExcluirVarios(TEntity[] entityArray) =>
+           await Task.Run(() => _dataset.RemoveRange(entityArray));
 
         public async Task<TEntity> RetornarPeloId(TId id) =>
             await _dataset.FindAsync(id);

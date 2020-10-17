@@ -1,4 +1,4 @@
-﻿namespace CompraAi.Dominio
+﻿namespace CompraAi.Dominio.Base
 {
     public abstract class EntidadeBase
     {

@@ -18,7 +18,7 @@ namespace CompraAi.Servicos
         public async Task<Familia> Criar(Familia familia)
         {
             familia.Validar();
-            _familiaRepository.Criar(familia);
+            await _familiaRepository.Criar(familia);
             await _familiaRepository.SalvarAlteracoesAsync();
             return familia;
         }
