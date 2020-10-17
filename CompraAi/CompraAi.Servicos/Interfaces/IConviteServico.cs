@@ -7,5 +7,6 @@ namespace CompraAi.Servicos.Interfaces
 {
     public interface IConviteServico : IServicoBase<Convite, Guid, IConviteRepositorio>
     {
+        void UsarConvite(Convite convite, Usuario usuario);
     }
 }

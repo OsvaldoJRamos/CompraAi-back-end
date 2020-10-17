@@ -16,5 +16,9 @@ namespace CompraAi.Servicos
                 ?? throw new ArgumentNullException(nameof(IUsuarioRepositorio), "O parâmetro não pode ser nulo.");
         }
 
+        public void UsarConvite(Convite convite, Usuario usuario)
+        {
+            convite.UsarConvite(usuario.UsuarioId);
+        }
     }
 }

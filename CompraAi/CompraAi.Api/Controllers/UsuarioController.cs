@@ -49,12 +49,12 @@ namespace CompraAi.Api.Controllers
         {
             try
             {
-                //var convite = await _conviteServico.RetornarPeloId(viewModel.ConviteId);
-                //var usuario = await _usuarioServico.RetornarPeloId(viewModel.UsuarioId);
+                var convite = await _conviteServico.RetornarPeloId(viewModel.ConviteId);
+                var usuario = await _usuarioServico.RetornarPeloId(viewModel.UsuarioId);
 
-                //var usuario = new Usuario(viewModel.Nome, viewModel.Email);
-                //await _usuarioServico.Criar(usuario);
-                return new ObjectResult(""/*usuario.UsuarioId*/);
+                _conviteServico.UsarConvite(convite, usuario);
+
+                return new ObjectResult(usuario.UsuarioId);
             }
             catch (ValidacaoEntidadeException ex)
             {

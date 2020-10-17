@@ -25,6 +25,15 @@ namespace CompraAi.Dominio
         public DateTime ExpiraEm { get; set; }
         public bool Usado { get; set; } = false;
 
+        public void UsarConvite(Guid UsuarioId)
+        {
+            var dataAtual = DateTime.Now;
+            if (dataAtual <= ExpiraEm)
+                Usado = true;
+            else
+                throw new InvalidOperationException("O convite informado esta expirado.");
+        }
+
         public override void Validar()
         {
             if (FamiliaId == null)
