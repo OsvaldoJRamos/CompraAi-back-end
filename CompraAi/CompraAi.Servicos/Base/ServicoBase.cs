@@ -56,9 +56,9 @@ namespace CompraAi.Servicos.Base
             return await _repositorio.RetornarPeloId(id);
         }
 
-        public Task<bool> SalvarAlteracoesAsync()
+        public async Task<bool> SalvarAlteracoesAsync()
         {
-            return _repositorio.SalvarAlteracoesAsync();
+            return await _repositorio.SalvarAlteracoesAsync();
         }
     }
 }
