@@ -36,5 +36,9 @@ namespace CompraAi.Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        //Obter Membros
+
+        //Obter familia do usuario
     }
 }
