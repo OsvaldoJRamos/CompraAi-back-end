@@ -46,6 +46,9 @@ namespace CompraAi.Api
             services.AddScoped<IItemServico, ItemServico>();
             services.AddScoped<IItemRepositorio, ItemRepositorio>();
 
+            services.AddScoped<IUsuarioFamiliaServico, UsuarioFamiliaServico>();
+            services.AddScoped<IUsuarioFamiliaRepositorio, UsuarioFamiliaRepositorio>();
+
             services.AddControllers();
 
         }

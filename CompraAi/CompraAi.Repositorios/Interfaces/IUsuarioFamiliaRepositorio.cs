@@ -4,7 +4,7 @@ using System;
 
 namespace CompraAi.Repositorios.Interfaces
 {
-    public interface IConviteRepositorio : IRepositorioBase<Convite, Guid>
+    public interface IUsuarioFamiliaRepositorio : IRepositorioBase<UsuarioFamilia, Guid>
     {
     }
 }

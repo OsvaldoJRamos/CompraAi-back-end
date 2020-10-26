@@ -3,7 +3,6 @@ using CompraAi.Repositorios.Interfaces;
 using CompraAi.Servicos.Base;
 using CompraAi.Servicos.Interfaces;
 using System;
-using System.Threading.Tasks;
 
 namespace CompraAi.Servicos
 {

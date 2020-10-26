@@ -15,13 +15,5 @@ namespace CompraAi.Servicos
             _usuarioRepository = usuarioRepository
                 ?? throw new ArgumentNullException(nameof(IUsuarioRepositorio), "O parâmetro não pode ser nulo.");
         }
-
-        public async Task<Usuario> Criar(Usuario usuario)
-        {
-            usuario.Validar();
-            _usuarioRepository.Criar(usuario);
-            await _usuarioRepository.SalvarAlteracoesAsync();
-            return usuario;
-        }
     }
 }

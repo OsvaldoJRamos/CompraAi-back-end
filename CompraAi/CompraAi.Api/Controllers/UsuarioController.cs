@@ -16,13 +16,16 @@ namespace CompraAi.Api.Controllers
     {
         private readonly IUsuarioServico _usuarioServico;
         private readonly IConviteServico _conviteServico;
+        private readonly IUsuarioFamiliaServico _usuarioFamiliaServico;
 
         public UsuarioController(
             IUsuarioServico usuarioServico,
-            IConviteServico conviteServico)
+            IConviteServico conviteServico,
+            IUsuarioFamiliaServico usuarioFamiliaServico)
         {
             _usuarioServico = usuarioServico;
             _conviteServico = conviteServico;
+            _usuarioFamiliaServico = usuarioFamiliaServico;
         }
 
         [HttpPost]
@@ -49,12 +52,16 @@ namespace CompraAi.Api.Controllers
         {
             try
             {
-                //TODO
-                //Falta terminar 
                 var convite = await _conviteServico.RetornarPeloId(viewModel.ConviteId);
                 var usuario = await _usuarioServico.RetornarPeloId(viewModel.UsuarioId);
 
+                if (convite == null || usuario == null)
+                    return BadRequest("O convite ou a família não foi encontrado!");
+
                 _conviteServico.UsarConvite(convite, usuario);
+
+                var usuarioFamilia = new UsuarioFamilia(viewModel.UsuarioId, convite.FamiliaId);
+                await _usuarioFamiliaServico.Criar(usuarioFamilia);
 
                 return new ObjectResult(usuario.UsuarioId);
             }

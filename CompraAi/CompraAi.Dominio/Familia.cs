@@ -22,7 +22,7 @@ namespace CompraAi.Dominio
 
         public void Validar()
         {
-            if (Codigo.Length > 10)
+            if (Codigo.Length < 10)
             {
                 throw new ValidacaoEntidadeException(
                     "O código da família não pode ter tamanho menor do que 10 caracteres.",
