@@ -1,10 +1,12 @@
-﻿using CompraAi.Api.ViewModel;
+﻿using AutoMapper;
+using CompraAi.Api.ViewModel;
 using CompraAi.Dominio;
 using CompraAi.Dominio.Validacoes;
 using CompraAi.Servicos.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -15,9 +17,11 @@ namespace CompraAi.Api.Controllers
     public class ItemController : ControllerBase
     {
         private readonly IItemServico _itemServico;
-        public ItemController(IItemServico itemServico)
+        private readonly IMapper _mapper;
+        public ItemController(IItemServico itemServico, IMapper mapper)
         {
             _itemServico = itemServico;
+            _mapper = mapper;
         }
 
         [HttpPost]
@@ -53,8 +57,8 @@ namespace CompraAi.Api.Controllers
 
                 if (item == null)
                     return NotFound($"Item não encontrado pelo ID '{id}'");
-                
-                return new ObjectResult(item);
+
+                return new ObjectResult(_mapper.Map<ItemViewModel>(item));
             }
             catch (Exception ex)
             {
@@ -62,5 +66,22 @@ namespace CompraAi.Api.Controllers
             }
         }
 
+
+        [HttpGet("Familia/{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ItemViewModel>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> RetornarPorFamiliaId(Guid id)
+        {
+            try
+            {
+                List<Item> itens = await _itemServico.RetornarPorFamiliaId(id);
+                return new ObjectResult(_mapper.Map<List<ItemViewModel>>(itens));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
     }
 }

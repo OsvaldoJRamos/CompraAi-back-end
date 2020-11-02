@@ -1,3 +1,5 @@
+using AutoMapper;
+using CompraAi.Api.Mapeamentos;
 using CompraAi.Repositorios;
 using CompraAi.Repositorios.Interfaces;
 using CompraAi.Servicos;
@@ -49,8 +51,9 @@ namespace CompraAi.Api
             services.AddScoped<IUsuarioFamiliaServico, UsuarioFamiliaServico>();
             services.AddScoped<IUsuarioFamiliaRepositorio, UsuarioFamiliaRepositorio>();
 
-            services.AddControllers();
+            services.AddAutoMapper(typeof(AutoMapperProfile));
 
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
