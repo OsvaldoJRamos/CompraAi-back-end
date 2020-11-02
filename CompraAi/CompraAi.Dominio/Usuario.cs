@@ -24,6 +24,11 @@ namespace CompraAi.Dominio
         public DateTime? AlteradoEm { get; set; }
         public DateTime? ExcluidoEm { get; set; }
 
+        public bool EstaAtivo()
+        {
+            return ExcluidoEm == null || ExcluidoEm > DateTime.Now;
+        }
+
         public override void Validar()
         {
             if (string.IsNullOrEmpty(Nome))

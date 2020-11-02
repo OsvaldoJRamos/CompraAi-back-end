@@ -5,7 +5,7 @@ using CompraAi.Servicos.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.IO;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CompraAi.Api.Controllers
@@ -70,5 +70,22 @@ namespace CompraAi.Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("{usuarioId}/ObterFamilia")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Familia>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> ObterFamiliaUsuario(Guid usuarioId)
+        {
+            try
+            {
+                var usuarios = _usuarioServico.ObterFamiliaUsuario(usuarioId);
+                return new ObjectResult(usuarios);
+            }
+            catch (ValidacaoEntidadeException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }

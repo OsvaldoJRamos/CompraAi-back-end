@@ -5,6 +5,7 @@ using CompraAi.Servicos.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -15,9 +16,13 @@ namespace CompraAi.Api.Controllers
     public class FamiliaController : ControllerBase
     {
         private readonly IFamiliaServico _familiaServico;
-        public FamiliaController(IFamiliaServico familiaServico)
+        private readonly IUsuarioServico _usuarioServico;
+        public FamiliaController(
+            IFamiliaServico familiaServico,
+            IUsuarioServico usuarioServico)
         {
             _familiaServico = familiaServico;
+            _usuarioServico = usuarioServico;
         }
 
         [HttpPost]
@@ -37,8 +42,20 @@ namespace CompraAi.Api.Controllers
             }
         }
 
-        //Obter Membros
-
-        //Obter familia do usuario
+        [HttpGet("{familiaId}/ObterMembros")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Usuario>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> ObterMembros(Guid familiaId)
+        {
+            try
+            {
+                var usuarios = _usuarioServico.ObterUsuariosFamilia(familiaId);
+                return new ObjectResult(usuarios);
+            }
+            catch (ValidacaoEntidadeException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

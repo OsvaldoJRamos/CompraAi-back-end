@@ -11,8 +11,8 @@ namespace CompraAi.Repositorios.Base
     public class RepositorioBase<TEntity, TId> : IRepositorioBase<TEntity, TId> where TEntity : class
     {
 
-        private readonly Contexto _contexto;
-        private DbSet<TEntity> _dataset;
+        protected readonly Contexto _contexto;
+        protected DbSet<TEntity> _dataset;
 
         public RepositorioBase(Contexto contexto)
         {
