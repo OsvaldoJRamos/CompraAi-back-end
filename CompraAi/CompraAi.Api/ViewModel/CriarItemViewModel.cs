@@ -12,6 +12,5 @@ namespace CompraAi.Api.ViewModel
         public Guid UsuarioId { get; set; }
         public Guid StatusId { get; set; }
         public string Descricao { get; set; }
-        //public byte[] ImagemProduto { get; set; }
     }
 }

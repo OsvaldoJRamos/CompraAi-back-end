@@ -11,7 +11,7 @@ namespace CompraAi.Servicos.Base
                                     where TRepositorio : IRepositorioBase<TEntity, TId>
     {
 
-        private readonly TRepositorio _repositorio;
+        protected readonly TRepositorio _repositorio;
 
         public ServicoBase(TRepositorio repositorio)
         {

@@ -31,7 +31,6 @@ namespace CompraAi.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TodoAPI", Version = "v1" });
             });
 
-
             services.AddDbContext<Contexto>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));

@@ -2,12 +2,14 @@
 using CompraAi.Api.ViewModel;
 using CompraAi.Dominio;
 using CompraAi.Dominio.Validacoes;
+using CompraAi.Servicos.Exceptions;
 using CompraAi.Servicos.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 using System;
 using System.Collections.Generic;
-using System.Net;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace CompraAi.Api.Controllers
@@ -31,7 +33,7 @@ namespace CompraAi.Api.Controllers
         {
             try
             {
-                var item = new Item(viewModel.FamiliaId, viewModel.UsuarioId, viewModel.Descricao);
+                var item = _mapper.Map<Item>(viewModel);
                 await _itemServico.Criar(item);
                 return new ObjectResult(item.ItemId);
             }
@@ -43,6 +45,45 @@ namespace CompraAi.Api.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
+        }
+
+        [HttpPost("Imagem/{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> AnexarImagem(Guid id, IFormFile imagemProduto)
+        {
+            try
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await imagemProduto.CopyToAsync(memoryStream);
+                    await _itemServico.AnexarImagem(id, memoryStream.ToArray());
+                }
+
+                return new ObjectResult($"Item criado com sucesso para o produto de id '{id}'.");
+            }
+            catch (ValidacaoEntidadeException ex) { return BadRequest(ex.Message); }
+            catch (ServicoException ex) { return BadRequest(ex.Message); }
+            catch (Exception ex) { return StatusCode(StatusCodes.Status500InternalServerError, ex.Message); }
+        }
+
+        [HttpGet("Imagem/{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(byte[]))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> RetornarImagem(Guid id)
+        {
+            try
+            {
+                byte[] imagemItem = await _itemServico.RetornarImagem(id);
+
+                if (imagemItem == null)
+                    return NoContent();
+
+                return File(imagemItem, "image/png");
+            }
+            catch (ValidacaoEntidadeException ex) { return BadRequest(ex.Message); }
+            catch (ServicoException ex) { return BadRequest(ex.Message); }
+            catch (Exception ex) { return StatusCode(StatusCodes.Status500InternalServerError, ex.Message); }
         }
 
         [HttpGet("{id:guid}")]
