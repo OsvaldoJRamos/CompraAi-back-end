@@ -6,6 +6,7 @@ using CompraAi.Servicos;
 using CompraAi.Servicos.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -65,7 +66,10 @@ namespace CompraAi.Api
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Compra Ai V1");
+                c.RoutePrefix = string.Empty;
             });
+
+            RedirecionarParaSwaggerSeNecessario(app);
 
             if (env.IsDevelopment())
             {
@@ -82,6 +86,13 @@ namespace CompraAi.Api
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private void RedirecionarParaSwaggerSeNecessario(IApplicationBuilder app)
+        {
+            var option = new RewriteOptions();
+            option.AddRedirect("(?i)swagger/", "/");
+            app.UseRewriter(option);
         }
     }
 }

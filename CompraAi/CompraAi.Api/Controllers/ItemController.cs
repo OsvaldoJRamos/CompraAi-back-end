@@ -60,7 +60,7 @@ namespace CompraAi.Api.Controllers
                     await _itemServico.AnexarImagem(id, memoryStream.ToArray());
                 }
 
-                return new ObjectResult($"Item criado com sucesso para o produto de id '{id}'.");
+                return new ObjectResult($"Imagem do item de ID '{id}' atualizada com sucesso.");
             }
             catch (ValidacaoEntidadeException ex) { return BadRequest(ex.Message); }
             catch (ServicoException ex) { return BadRequest(ex.Message); }

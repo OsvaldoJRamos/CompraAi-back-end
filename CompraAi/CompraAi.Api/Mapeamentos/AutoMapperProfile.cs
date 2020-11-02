@@ -10,6 +10,7 @@ namespace CompraAi.Api.Mapeamentos
         {
             CreateMap<Usuario, CriarUsuarioViewModel>().ReverseMap();
             CreateMap<Item, ItemViewModel>().ReverseMap();
+            CreateMap<Item, CriarItemViewModel>().ReverseMap();
         }
     }
 }
