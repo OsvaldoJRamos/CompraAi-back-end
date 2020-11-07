@@ -47,6 +47,51 @@ namespace CompraAi.Api.Controllers
             }
         }
 
+        [HttpPost("/Atualizar")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Atualizar([FromBody] EditarItemViewModel viewModel)
+        {
+            try
+            {
+                var item = await _itemServico.RetornarPeloId(viewModel.ItemId);
+
+                if (item == null)
+                    return BadRequest($"Nenhum item encontrado com o ID {viewModel.ItemId}");
+
+                item.Descricao = viewModel.Descricao;
+                item.StatusId = viewModel.StatusId;
+
+                await _itemServico.Atualizar(item);
+                return new ObjectResult($"Item de ID {viewModel.ItemId} atualizado com sucesso.");
+            }
+            catch (ValidacaoEntidadeException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+
+        [HttpDelete("{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        public async Task<IActionResult> ExcluirPeloId(Guid id)
+        {
+            try
+            {
+                await _itemServico.ExcluirPeloId(id);
+
+                return new ObjectResult($"Item de ID {id} excluído com sucesso.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
         [HttpPost("Imagem/{id:guid}")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -87,7 +132,7 @@ namespace CompraAi.Api.Controllers
         }
 
         [HttpGet("{id:guid}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Item))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ItemViewModel))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RetornarPeloId(Guid id)

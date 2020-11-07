@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -40,6 +41,38 @@ namespace CompraAi.Repositorios.Base
 
         public async Task<TEntity> RetornarPeloId(TId id) =>
             await _dataset.FindAsync(id);
+
+        public async Task<List<TEntity>> RetornarTodos()=> 
+           await _dataset.ToListAsync();
+
+
+        public async Task<List<TEntity>> RetornarTodos(params Expression<Func<TEntity, object>>[] includes)
+        {
+            var result = _dataset.Where(i => true);
+
+            foreach (var includeExpression in includes)
+                result = result.Include(includeExpression);
+
+            return await result.ToListAsync();
+        }
+
+        /// <summary>
+        /// Pesquisar por Predicates.
+        /// http://appetere.com/post/passing-include-statements-into-a-repository
+        /// </summary>
+        /// <param name="predicate">O predicate.</param>
+        /// <param name="includes">Os includes.</param>
+        /// <returns></returns>
+        public async Task<TEntity> PesquisarPor(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
+        {
+            var result = _dataset.Where(predicate);
+
+            foreach (var includeExpression in includes)
+                result = result.Include(includeExpression);
+
+            return await result.FirstOrDefaultAsync();
+        }
+
 
         public async Task<bool> SalvarAlteracoesAsync() =>
             await _contexto.SaveChangesAsync() > 0;

@@ -1,10 +1,11 @@
-﻿using CompraAi.Dominio.Validacoes;
+﻿using CompraAi.Dominio.Base;
+using CompraAi.Dominio.Validacoes;
 using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace CompraAi.Dominio
 {
-    public class Familia
+    public class Familia : EntidadeBase
     {
         public Familia(string nome, string codigo)
         {
@@ -20,7 +21,7 @@ namespace CompraAi.Dominio
         public DateTime? AlteradoEm { get; set; }
         public DateTime? ExcluidoEm { get; set; }
 
-        public void Validar()
+        public override void Validar()
         {
             if (Codigo.Length < 10)
             {
