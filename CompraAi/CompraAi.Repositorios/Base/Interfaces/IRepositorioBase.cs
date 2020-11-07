@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace CompraAi.Repositorios.Base.Interfaces
 {
@@ -10,6 +13,13 @@ namespace CompraAi.Repositorios.Base.Interfaces
         Task ExcluirVarios(TEntity[] entityArray);
         Task<TEntity> RetornarPeloId(TId id);
         Task ExcluirPeloId(TId id);
+
+
+        Task<List<TEntity>> RetornarTodos();
+        Task<List<TEntity>> RetornarTodos(params Expression<Func<TEntity, object>>[] includes);
+        Task<TEntity> PesquisarPor(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes);
+
+
         Task<bool> SalvarAlteracoesAsync();
     }
 }

@@ -51,6 +51,9 @@ namespace CompraAi.Api
             services.AddScoped<IUsuarioFamiliaServico, UsuarioFamiliaServico>();
             services.AddScoped<IUsuarioFamiliaRepositorio, UsuarioFamiliaRepositorio>();
 
+            services.AddScoped<IStatusServico, StatusServico>();
+            services.AddScoped<IStatusRepositorio, StatusRepositorio>();
+
             services.AddAutoMapper(typeof(AutoMapperProfile));
 
             services.AddControllers();
