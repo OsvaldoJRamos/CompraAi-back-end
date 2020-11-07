@@ -9,6 +9,8 @@ namespace CompraAi.Api.Mapeamentos
         public AutoMapperProfile()
         {
             CreateMap<Usuario, CriarUsuarioViewModel>().ReverseMap();
+            CreateMap<Item, ItemViewModel>().ReverseMap();
+            CreateMap<Item, CriarItemViewModel>().ReverseMap();
         }
     }
 }

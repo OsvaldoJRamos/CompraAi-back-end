@@ -1,9 +1,12 @@
+using AutoMapper;
+using CompraAi.Api.Mapeamentos;
 using CompraAi.Repositorios;
 using CompraAi.Repositorios.Interfaces;
 using CompraAi.Servicos;
 using CompraAi.Servicos.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,7 +32,6 @@ namespace CompraAi.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TodoAPI", Version = "v1" });
             });
 
-
             services.AddDbContext<Contexto>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -49,8 +51,9 @@ namespace CompraAi.Api
             services.AddScoped<IUsuarioFamiliaServico, UsuarioFamiliaServico>();
             services.AddScoped<IUsuarioFamiliaRepositorio, UsuarioFamiliaRepositorio>();
 
-            services.AddControllers();
+            services.AddAutoMapper(typeof(AutoMapperProfile));
 
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,7 +66,10 @@ namespace CompraAi.Api
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Compra Ai V1");
+                c.RoutePrefix = string.Empty;
             });
+
+            RedirecionarParaSwaggerSeNecessario(app);
 
             if (env.IsDevelopment())
             {
@@ -80,6 +86,13 @@ namespace CompraAi.Api
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private void RedirecionarParaSwaggerSeNecessario(IApplicationBuilder app)
+        {
+            var option = new RewriteOptions();
+            option.AddRedirect("(?i)swagger/", "/");
+            app.UseRewriter(option);
         }
     }
 }

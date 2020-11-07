@@ -1,10 +1,11 @@
-﻿using CompraAi.Dominio.Validacoes;
+﻿using CompraAi.Dominio.Base;
+using CompraAi.Dominio.Validacoes;
 using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace CompraAi.Dominio
 {
-    public class Item
+    public class Item : EntidadeBase
     {
         public Item(Guid familiaId, Guid usuarioId, string descricao)
         {
@@ -24,7 +25,7 @@ namespace CompraAi.Dominio
         public DateTime? AlteradoEm { get; set; }
         public DateTime? ExcluidoEm { get; set; }
 
-        public void Validar()
+        public override void Validar()
         {
             if (FamiliaId == null)
                 throw new ValidacaoEntidadeException("O ID da família não pode ser nulo.", nameof(FamiliaId));
